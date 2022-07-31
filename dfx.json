@@ -1,0 +1,35 @@
+{
+  "canisters": {
+    "banket_backend": {
+      "main": "src/banket_backend/main.mo",
+      "type": "motoko"
+    },
+    "banket_frontend": {
+      "dependencies": [
+        "banket_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/banket_frontend/src/index.html"
+      },
+      "source": [
+        "src/banket_frontend/assets",
+        "dist/banket_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "dfx": "0.11.0",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
