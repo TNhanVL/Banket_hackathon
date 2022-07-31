@@ -23,6 +23,8 @@ actor {
       Phone : Text;
       Sex : Bool;
   };
+
+  stable var next : Nat = 0;
     
   // stable var entries : [( Principal, Person)] = [];
 
@@ -32,25 +34,26 @@ actor {
   // type FavorResult<T,E> = Result.Result<T, E>;
 
   // Function 1:  Read Account function
-  // public query func read_Account(principal : Principal) : async ?Person {
-  //       return(customers.get(principal));
+  // public query func read_Account(principal : Principal) : async Nat {
+  //       return(customers.size());
   // };
 
   // Function 2: Create Account
-  // public shared(caller) func createAccount ( ID : Nat, Name : Text, Birthday : Text, Phone : Text, Sex : Bool ) : async () {
-  //   var person: Person = {
-  //     ID = ID;
-  //     Name = Name;
-  //     Birthday = Birthday;
-  //     Phone = Phone;
-  //     Sex = Sex;
-  //   };
-  //   switch (customers.get(caller.caller)) {
-  //     case null {
-  //       customers.put(caller.caller, person);
-  //     };
-  //   };
-  // };
+  public shared(caller) func createAccount ( Name : Text, Birthday : Text, Phone : Text, Sex : Bool ) : async () {
+    next += 1;
+    var person: Person = {
+      ID = next;
+      Name = Name;
+      Birthday = Birthday;
+      Phone = Phone;
+      Sex = Sex;
+    };
+    switch (customers.get(caller.caller)) {
+      case null {
+        customers.put(caller.caller, person);
+      };
+    };
+  };
 
   // Function 3: Update Account function
 
