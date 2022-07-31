@@ -43,10 +43,10 @@ actor {
 
   // Function 1:  Read Account function
     
-  // public query func read_Account(principal : Principal) : async Nat {
-  //   let result = Trie.toArray(customers);
-  //   return result;
-  // };
+  public query func read_Account(principal : Principal) : async Nat {
+    let result = Array.from
+    return result;
+  };
 
   // Function 2: Create Account
   public shared(caller) func createAccount ( FirstName : Text, LastName : Text, Birthday : Text, Phone : Text, Address: Text, Sex : Bool ) : async Bool {
@@ -107,30 +107,19 @@ actor {
 
   //delete
   public shared(caller) func deleteAccount ( id : Nat ) : async Bool {
-    next += 1;
-    var person: Person = {
-      FirstName = FirstName;
-      LastName = LastName;
-      Birthday = Birthday;
-      Phone = Phone;
-      Address = Address;
-      Sex = Sex;
-    };
-    let (newPersons, existing) = Trie.put(
-      customers,
-      key(next),
-      Nat.equal,
-      person
+    let result = Trie.find(
+      persons,key(id),Nat.equal
     );
-    switch(existing) {
-      // if there is no match
+    switch(result) {
+      // Not update
       case (null) {
-         customers := newPersons;
-      };
-      // Match
-      case(?v) {
         return false;
       };
+      case (?v) {
+        persons := Trie.replace(
+          persons,key(id),Nat.equal,null
+        ).0;
+      };  
     };
     return true;
   };
