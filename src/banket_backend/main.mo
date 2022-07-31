@@ -8,8 +8,6 @@ import Result "mo:base/Result";
 import Principal "mo:base/Principal";
 import Iter "mo:base/Iter";
 
-import Person "Person"
-
 // import Debug "mo:base/Debug";
 // import HTTP "http";
 
@@ -43,10 +41,10 @@ actor {
 
   // Function 1:  Read Account function
     
-  public query func read_Account(principal : Principal) : async Nat {
-    let result = Array.from
-    return result;
-  };
+  // public query func read_Account(principal : Principal) : async Nat {
+  //   let result = Array.from
+  //   return result;
+  // };
 
   // Function 2: Create Account
   public shared(caller) func createAccount ( FirstName : Text, LastName : Text, Birthday : Text, Phone : Text, Address: Text, Sex : Bool ) : async Bool {
@@ -108,7 +106,7 @@ actor {
   //delete
   public shared(caller) func deleteAccount ( id : Nat ) : async Bool {
     let result = Trie.find(
-      persons,key(id),Nat.equal
+      customers,key(id),Nat.equal
     );
     switch(result) {
       // Not update
@@ -116,8 +114,8 @@ actor {
         return false;
       };
       case (?v) {
-        persons := Trie.replace(
-          persons,key(id),Nat.equal,null
+        customers := Trie.replace(
+          customers,key(id),Nat.equal,null
         ).0;
       };  
     };
